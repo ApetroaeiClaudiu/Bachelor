@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd
+        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+    <changeSet id="1" author="claudiu-movie">
+        <sql>
+            CREATE TABLE movie(
+            id BIGINT NOT NULL AUTO_INCREMENT,
+            director VARCHAR(255) NOT NULL,
+            title VARCHAR(255) NOT NULL,
+            genre VARCHAR(255) NOT NULL,
+            duration INT NOT NULL,
+            release_year INT NOT NULL,
+            average FLOAT NOT NULL,
+            CONSTRAINT pk_id PRIMARY KEY(id)
+            );
+        </sql>
+        <rollback>
+            DROP TABLE movie;
+        </rollback>
+    </changeSet>
+    <changeSet id="2" author="claudiu-movie">
+        <sql>
+            CREATE TABLE rating(
+            id BIGINT NOT NULL AUTO_INCREMENT,
+            movieId BIGINT NOT NULL,
+            userId BIGINT NOT NULL,
+            ratingValue INT NOT NULL,
+            CONSTRAINT pk_id PRIMARY KEY(id),
+            CONSTRAINT fk_rating_movie FOREIGN KEY (movieId) REFERENCES movie(id) ON DELETE CASCADE ON UPDATE CASCADE
+            );
+        </sql>
+        <rollback>
+            DROP TABLE rating;
+        </rollback>
+    </changeSet>
+    <changeSet id="3" author="claudiu-movie">
+        <sql>
+            INSERT INTO movie (director,title,genre,duration,release_year,average) VALUES ('Interstellar','Christopher Nolan','Sci-Fi',169,2014,9.4)
+        </sql>
+        <rollback>
+            TRUNCATE TABLE movie;
+        </rollback>
+    </changeSet>
+</databaseChangeLog>
