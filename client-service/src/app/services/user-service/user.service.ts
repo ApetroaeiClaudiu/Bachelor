@@ -27,9 +27,10 @@ export class UserService {
    login(user: User): Observable<any>{
      const headers = new HttpHeaders(
        user ? {
-         authorization:'Basic' + btoa(user.username + ':' + user.password)
+         authorization:'Basic ' + btoa(user.username + ':' + user.password)
        }:{}
      );
+     console.log(headers);
      return this.http.get<any>(API_URL + "login",{headers: headers}).pipe(
        map(response => {
          if(response){
@@ -41,13 +42,17 @@ export class UserService {
      );
    }
 
-   logout(): Observable<any>{
-     return this.http.post(API_URL + "logout",{}).pipe(
-       map(response =>{
-         localStorage.removeItem('currentUser');
-         this.currentUserSubject.next(null);
-       })
-     );
+   //: Observable<any>
+   logout(){
+    localStorage.removeItem('currentUser');
+    this.currentUserSubject.next(null);
+    //  return this.http.post(API_URL + "logout",{}).pipe(
+    //    map(response =>{
+    //      console.log(response);
+    //      localStorage.removeItem('currentUser');
+    //      this.currentUserSubject.next(null);
+    //    })
+    //  );
    }
 
    register(user: User): Observable<any>{

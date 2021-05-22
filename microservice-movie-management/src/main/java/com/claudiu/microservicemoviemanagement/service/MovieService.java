@@ -17,4 +17,8 @@ public interface MovieService {
     Rating saveRating(Rating rating);
 
     Movie updateMovie(Movie movie);
+
+    int findValue(Long movieId, Long userId);
+
+    Rating findRating(Long userId,Long movieId);
 }

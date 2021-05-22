@@ -57,8 +57,16 @@ public class MovieServiceImpl implements MovieService{
             sum=sum+r.getRatingValue();
         }
         if(sum!=0){
-            movie.setAverage((float)movieRatings.size()/sum);
+            movie.setAverage((float)sum/movieRatings.size());
         }
         return movieRepository.save(movie);
     }
+
+    @Override
+    public int findValue(Long movieId, Long userId){
+        return ratingRepository.findValue(movieId,userId);
+    }
+
+    @Override
+    public Rating findRating(Long userId,Long movieId){return ratingRepository.findRating(userId, movieId);}
 }

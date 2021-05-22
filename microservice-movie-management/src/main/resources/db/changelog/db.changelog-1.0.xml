@@ -27,11 +27,11 @@
         <sql>
             CREATE TABLE rating(
             id BIGINT NOT NULL AUTO_INCREMENT,
-            movieId BIGINT NOT NULL,
-            userId BIGINT NOT NULL,
-            ratingValue INT NOT NULL,
+            movie_id BIGINT NOT NULL,
+            user_id BIGINT NOT NULL,
+            rating_value INT NOT NULL,
             CONSTRAINT pk_id PRIMARY KEY(id),
-            CONSTRAINT fk_rating_movie FOREIGN KEY (movieId) REFERENCES movie(id) ON DELETE CASCADE ON UPDATE CASCADE
+            CONSTRAINT fk_rating_movie FOREIGN KEY (movie_id) REFERENCES movie(id) ON DELETE CASCADE ON UPDATE CASCADE
             );
         </sql>
         <rollback>
@@ -40,7 +40,8 @@
     </changeSet>
     <changeSet id="3" author="claudiu-movie">
         <sql>
-            INSERT INTO movie (director,title,genre,duration,release_year,average) VALUES ('Interstellar','Christopher Nolan','Sci-Fi',169,2014,9.4)
+            INSERT INTO movie (title,director,genre,duration,release_year,average) VALUES ('Interstellar','Christopher Nolan','Sci-Fi',169,2014,0),
+            ('The Last Samurai','Edward Zwick','Drama',154,2003,0),('The Social Network','David Fincher','Biography',120,2010,0)
         </sql>
         <rollback>
             TRUNCATE TABLE movie;

@@ -63,14 +63,37 @@ public class UserController {
         Principal principal = request.getUserPrincipal();
         if(principal == null || principal.getName() == null){
             //logout successful
+            System.out.println("logout?");
             return new ResponseEntity<>(HttpStatus.OK);
         }
-        return new ResponseEntity<>(userService.findByEmail(principal.getName()),HttpStatus.OK);
+        User user = userService.findByUsername(principal.getName());
+        return new ResponseEntity<>(user,HttpStatus.OK);
     }
+
+//    @GetMapping("/service/login")
+//    public ResponseEntity<?> getUser(Principal principal){
+//        System.out.println("login");
+//        System.out.println(principal.getName());
+//        //Principal principal = request.getUserPrincipal();
+//        if(principal == null || principal.getName() == null){
+//            //This means; logout will be successful. login?logout
+//            System.out.println("logout?");
+//            return new ResponseEntity<>(HttpStatus.OK);
+//        }
+//        //username = principal.getName()
+//        User user = userService.findByEmail(principal.getName());
+//        System.out.println(user);
+//        return new ResponseEntity<>(user,HttpStatus.OK);
+//    }
 
     @PostMapping("/service/emails")
     public ResponseEntity<?> getEmailsOfUsers(@RequestBody List<Long> idList){
         return new ResponseEntity<>(userService.findUsers(idList),HttpStatus.OK);
+    }
+
+    @PostMapping("/service/users")
+    public ResponseEntity<?> getUsers(@RequestBody List<Long> idList){
+        return new ResponseEntity<>(userService.findUsersFull(idList),HttpStatus.OK);
     }
 }
 

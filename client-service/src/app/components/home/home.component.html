@@ -1,1 +1,64 @@
-<p>home works!</p>
+<div class="container">
+    <div class="alert alert-danger" *ngIf="errorMessage">
+        <strong>Error!</strong> {{errorMessage}}
+    </div>
+    <div class="alert alert-success" *ngIf="infoMessage">
+        <strong>Successful!</strong> {{infoMessage}}
+    </div>
+    <div class="movie-container">
+        <div class="card">
+            <div class="card-header">
+                <div class="row">
+                    <div class="col col-xs-6">
+                        <h3 class="panel-title">All Movies</h3>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-body">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Title</th>
+                            <th scope="col">Director</th>
+                            <th scope="col">Release Year</th>
+                            <th scope="col">Rating</th>
+                            <th scope="col">Choose Rating</th>
+                            <th scope="col">Rate This</th>
+                            <th scope="col">Details</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of movieList; index as ind">
+                            <th scope="row">{{ind + 1}}</th>
+                            <td>{{item.title}}</td>
+                            <td>{{item.director}}</td>
+                            <td>{{item.releaseYear}}</td>
+                            <td>{{item.average}}</td>
+                            <select (change)="selectOption($event.target.value)" class="form-select" aria-label="Default select example">
+                                <option selected>Choose Rating</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9</option>
+                                <option value="10">10</option>
+                              </select>
+                            <td>
+                                <button class="btn btn-info" (click)="rate(item)">Rate This</button>
+                            </td>
+                            <td>
+                                <button class="btn btn-success" (click)="detail(item)">Details</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,4 +1,47 @@
-
-<div class="content" role="main">
-</div>
-<router-outlet></router-outlet>
+<!--The content below is only a placeholder and can be replaced.-->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<div style="text-align:center">
+    <h1>
+      Welcome to Cinephile!
+    </h1>
+    
+  </div>
+  
+  <nav class="navbar navbar-expand navbar-dark bg-dark">
+    <a class="navbar-brand">
+      <span class="glyphicon glyphicon-camera"></span> Movies
+    </a>
+    <div class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <a href="/home" class="nav-link">
+          <span class="glyphicon glyphicon-home"></span> Home
+        </a>
+      </li>
+    </div>
+    <div class="navbar-nav ml-auto" *ngIf="!currentUser">
+      <li class="nav-item">
+        <a href="/register" class="nav-link">
+          <span class="glyphicon glyphicon-user"></span> Sign Up
+        </a>
+      </li>
+      <li class="nav-item">
+          <a href="/login" class="nav-link">
+            <span class="glyphicon glyphicon-log-in"></span> Login
+          </a>
+      </li>
+    </div>
+    <div class="navbar-nav ml-auto" *ngIf="currentUser">
+        <li class="nav-item">
+          <a href="/profile" class="nav-link">
+            <span class="glyphicon glyphicon-user"></span> {{currentUser.username}}
+          </a>
+        </li>
+        <li class="nav-item">
+            <a (click)="logout()" class="nav-link">
+              <span class="glyphicon glyphicon-log-in"></span> Logout
+            </a>
+        </li>
+      </div>  
+  </nav>
+  
+  <router-outlet></router-outlet>

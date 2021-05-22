@@ -1,1 +1,42 @@
-<p>profile works!</p>
+<div class="container">
+    <header class="jumbotron">
+        <h1 class="display-3">
+            <strong>{{currentUser.username}}</strong>, These are your ratings.
+        </h1>
+    </header>
+    <a class="btn btn-link log-out" (click)="logout()">Logout</a>
+    <div class="transaction-container">
+        <div class="card">
+            <div class="card-header">
+                <div class="row">
+                    <div class="col col-xs-6">
+                        <h3 class="panel-title">Your Ratings</h3>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-body">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Title</th>
+                            <th scope="col">Director</th>
+                            <th scope="col">Release Year</th>
+                            <th scope="col">Your Rating</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of ratingList; let i=index">
+                            <th scope="row">{{i + 1}}</th>
+                            <td>{{item.movie.title}}</td>
+                            <td>{{item.movie.director}}</td>
+                            <td>{{item.movie.releaseYear}}</td>
+                            <td>{{item.ratingValue}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

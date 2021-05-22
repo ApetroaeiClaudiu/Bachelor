@@ -16,7 +16,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @RestController
@@ -52,15 +54,21 @@ public class MovieController {
         return new ResponseEntity<>(movieService.findUserRatings(userId), HttpStatus.OK);
     }
 
-    @GetMapping("/service/movies")
+    @GetMapping("/service/all")
     public ResponseEntity<?> findAllMovies(){
         return new ResponseEntity<>(movieService.allMovies(),HttpStatus.OK);
     }
 
     @PostMapping("/service/rate")
     public ResponseEntity<?> saveRating(@RequestBody Rating rating){
-        rating.setMovie(movieService.findMovieById(rating.getMovie().getId()));
-        return new ResponseEntity<>(movieService.saveRating(rating),HttpStatus.OK);
+        Rating r = movieService.findRating(rating.getUserId(),rating.getMovie().getId());
+        if(r == null ){
+            rating.setMovie(movieService.findMovieById(rating.getMovie().getId()));
+            return new ResponseEntity<>(movieService.saveRating(rating),HttpStatus.OK);
+        }
+        r.setRatingValue(rating.getRatingValue());
+        r.setMovie(movieService.findMovieById(rating.getMovie().getId()));
+        return new ResponseEntity<>(movieService.saveRating(r),HttpStatus.OK);
     }
 
     @GetMapping("/service/ratings/{movieId}")
@@ -69,13 +77,22 @@ public class MovieController {
     }
 
     @GetMapping("/service/movie/{movieId}")
-    public ResponseEntity<?> findStudentsOfCourse(@PathVariable Long movieId){
+    public ResponseEntity<?> findUsersOfMovie(@PathVariable Long movieId){
         List<Rating> ratings = movieService.findRatingsOfMovie(movieId);
         if(CollectionUtils.isEmpty(ratings)){
             return ResponseEntity.notFound().build();
         }
+        List<String> finalList = new ArrayList<>();
         List<Long> userIdList = ratings.parallelStream().map(t -> t.getUserId()).collect(Collectors.toList());
-        List<String> users = userClient.getEmails(userIdList);
-        return new ResponseEntity<>(users,HttpStatus.OK);
+        List<String> users = userClient.getUsers(userIdList);
+        for(int i = 0; i < users.size(); i ++) {
+            String name = users.get(i).split(",")[0];
+            String id = users.get(i).split(",")[1];
+            finalList.add(name);
+            finalList.add(id);
+            Long userId = Long.parseLong(id);
+            finalList.add(String.valueOf(movieService.findValue(movieId,userId)));
+        }
+        return new ResponseEntity<>(finalList,HttpStatus.OK);
     }
 }

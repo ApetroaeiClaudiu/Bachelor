@@ -1,4 +1,4 @@
-class Movie{
+export class Movie{
     id: number;
     director: string="";
     title: string="";
@@ -7,5 +7,3 @@ class Movie{
     releaseYear: number;
     average: number;
 }
-
-export {Movie}

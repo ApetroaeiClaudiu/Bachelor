@@ -30,7 +30,7 @@ public class User {
     @Column(name = "password")
     private String password;
 
-    @Column(name = "displayName")
+    @Column(name = "display_name")
     private String displayName;
 
     @Enumerated(value = EnumType.STRING)

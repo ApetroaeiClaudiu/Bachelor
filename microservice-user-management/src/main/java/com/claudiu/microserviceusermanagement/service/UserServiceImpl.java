@@ -7,6 +7,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class UserServiceImpl implements UserService{
@@ -29,7 +30,17 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
+    public User findByUsername(String username){
+        return userRepository.findByUsername(username).orElse(null);
+    }
+
+    @Override
     public List<String> findUsers(List<Long> idList){
         return userRepository.findUsers(idList);
+    }
+
+    @Override
+    public List<String> findUsersFull(List<Long> idList){
+        return userRepository.findUsersFull(idList);
     }
 }
